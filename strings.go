@@ -1,4 +1,4 @@
-package api_helper
+package api
 
 import (
 	"encoding/base64"

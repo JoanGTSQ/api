@@ -1,4 +1,4 @@
-package api_helper
+package api
 
 func PrintStats() {
 	// ticker := time.NewTicker(1 * time.Minute)
