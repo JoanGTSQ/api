@@ -16,12 +16,12 @@ var (
 	Error        *log.Logger
 	Gin          *log.Logger
 	Stats        *log.Logger
-	ErrorColor   = color.New(color.Bold, color.FgRed).SprintFunc()
-	InfoColor    = color.New(color.Bold, color.FgWhite).SprintFunc()
-	DebugColor   = color.New(color.Bold, color.FgGreen).SprintFunc()
-	WarningColor = color.New(color.Bold, color.FgYellow).SprintFunc()
-	VersionColor = color.New(color.Bold, color.FgHiCyan).SprintFunc()
-	GinColor     = color.New(color.Bold, color.FgBlue).SprintFunc()
+	errorColor   = color.New(color.Bold, color.FgRed).SprintFunc()
+	infoColor    = color.New(color.Bold, color.FgWhite).SprintFunc()
+	debugColor   = color.New(color.Bold, color.FgGreen).SprintFunc()
+	warningColor = color.New(color.Bold, color.FgYellow).SprintFunc()
+	versionColor = color.New(color.Bold, color.FgHiCyan).SprintFunc()
+	ginColor     = color.New(color.Bold, color.FgBlue).SprintFunc()
 	wrt          io.Writer
 )
 
@@ -34,26 +34,26 @@ func InitLog(debugEnabled bool, route, version string) {
 	wrt = io.MultiWriter(os.Stdout, f)
 	log.SetOutput(wrt)
 
-	Info = log.New(wrt, InfoColor("\n[INFO] "), log.Ldate|log.Ltime|log.Lshortfile)
+	Info = log.New(wrt, infoColor("\n[INFO] "), log.Ldate|log.Ltime|log.Lshortfile)
 	Info.SetOutput(wrt)
 
-	Warning = log.New(wrt, WarningColor("\n[WARNING] "), log.Ldate|log.Ltime|log.Lshortfile)
+	Warning = log.New(wrt, warningColor("\n[WARNING] "), log.Ldate|log.Ltime|log.Lshortfile)
 	Warning.SetOutput(wrt)
 
-	Debug = log.New(wrt, DebugColor("\n[DEBUG] "), log.Ldate|log.Ltime|log.Lshortfile)
+	Debug = log.New(wrt, debugColor("\n[DEBUG] "), log.Ldate|log.Ltime|log.Lshortfile)
 	Debug.SetOutput(wrt)
 	if !debugEnabled {
 		var buff bytes.Buffer
 		Debug.SetOutput(&buff)
 	}
 
-	Error = log.New(wrt, ErrorColor("\n[ERROR] "), log.Ldate|log.Ltime|log.Lshortfile)
+	Error = log.New(wrt, errorColor("\n[ERROR] "), log.Ldate|log.Ltime|log.Lshortfile)
 	Error.SetOutput(wrt)
 
-	Gin = log.New(wrt, GinColor("\n[GIN] "), log.Ldate|log.Ltime)
+	Gin = log.New(wrt, ginColor("\n[GIN] "), log.Ldate|log.Ltime)
 	Gin.SetOutput(wrt)
 
-	Stats = log.New(wrt, DebugColor("\n[STATS] "), log.Ldate|log.Ltime|log.Lshortfile)
+	Stats = log.New(wrt, debugColor("\n[STATS] "), log.Ldate|log.Ltime|log.Lshortfile)
 	Stats.SetOutput(wrt)
 	if !debugEnabled {
 		var buff bytes.Buffer
@@ -70,9 +70,9 @@ func PrintVersion(version string) {
 		log.Fatalf("error opening file: %v", err)
 	}
 
-	versionLog := log.New(os.Stdout, VersionColor("\n[VERSION] "), 0)
+	versionLog := log.New(os.Stdout, versionColor("\n[VERSION] "), 0)
 	versionLog.SetOutput(os.Stdout)
-	versionLog.Println("CERBERUS", version, VersionColor("[VERSION]"))
+	versionLog.Println("CERBERUS", version, versionColor("[VERSION]"))
 
 	vLog := log.New(f, "", 0)
 	vLog.SetOutput(f)
