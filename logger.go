@@ -25,8 +25,10 @@ var (
 	wrt          io.Writer
 )
 
-func InitLog(debugEnabled bool, route, version string) {
+var route string
 
+func InitLog(debugEnabled bool, desiredLogRoute, version string) {
+	route = desiredLogRoute
 	f, err := os.OpenFile(route, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
@@ -78,4 +80,18 @@ func PrintVersion(version string) {
 	vLog.SetOutput(f)
 
 	vLog.Println("CERBERUS VERSION:", version)
+}
+
+func EnableDebug(activated bool) {
+	f, err := os.OpenFile(route, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+	wrt = io.MultiWriter(os.Stdout, f)
+	var buff bytes.Buffer
+	if activated {
+		Debug.SetOutput(wrt)
+	} else {
+		Debug.SetOutput(&buff)
+	}
 }
