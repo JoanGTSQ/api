@@ -76,12 +76,12 @@ func PrintVersion(engine string) {
 
 	versionLog := log.New(os.Stdout, versionColor("\n[VERSION] "), 0)
 	versionLog.SetOutput(os.Stdout)
-	versionLog.Println(version)
+	versionLog.Println(engine)
 
 	vLog := log.New(f, "", 0)
 	vLog.SetOutput(f)
 
-	vLog.Println("CERBERUS VERSION:", version)
+	vLog.Println(engine)
 }
 
 // EnableDebug use this function to enable/disable debug POST InitLog
