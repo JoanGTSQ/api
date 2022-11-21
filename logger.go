@@ -27,6 +27,7 @@ var (
 
 var route string
 
+//InitLog initialize loggers with route and colors (predefined)
 func InitLog(debugEnabled bool, desiredLogRoute, version string) {
 	route = desiredLogRoute
 	f, err := os.OpenFile(route, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
@@ -65,7 +66,8 @@ func InitLog(debugEnabled bool, desiredLogRoute, version string) {
 	PrintVersion(version)
 }
 
-func PrintVersion(version string) {
+// PrintVersion print engine with version example "CERBERUS V1.0.0" 
+func PrintVersion(engine string) {
 	os.Remove("SDK.ver")
 	f, err := os.OpenFile("SDK.ver", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
@@ -74,7 +76,7 @@ func PrintVersion(version string) {
 
 	versionLog := log.New(os.Stdout, versionColor("\n[VERSION] "), 0)
 	versionLog.SetOutput(os.Stdout)
-	versionLog.Println("CERBERUS", version, versionColor("[VERSION]"))
+	versionLog.Println(version)
 
 	vLog := log.New(f, "", 0)
 	vLog.SetOutput(f)
@@ -82,6 +84,7 @@ func PrintVersion(version string) {
 	vLog.Println("CERBERUS VERSION:", version)
 }
 
+// EnableDebug use this function to enable/disable debug POST InitLog
 func EnableDebug(activated bool) {
 	f, err := os.OpenFile(route, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
