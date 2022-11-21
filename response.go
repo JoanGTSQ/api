@@ -8,6 +8,7 @@ type Response struct {
 	Response     map[string]interface{}
 }
 
+//SendAnswer transform the map into JSON and return it to gin.Context
 func (r *Response) SendAnswer() {
 
 	if len(r.Response) == 0 {
